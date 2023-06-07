@@ -154,8 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabList:
   - {fileID: 6142553926046071423, guid: 59321ebfa8a92094e85dc8946f83ba88, type: 3}
-  - {fileID: 3094196768960324437, guid: 5dd0f0418104e9444a54b70a278ceb27, type: 3}
+  - {fileID: 2632611262577259143, guid: 40d5c93605378f64986769949899bb52, type: 3}
   - {fileID: 2025658311128594065, guid: 1ea950ac24ff2fe44a38d77988143b44, type: 3}
+  - {fileID: 5056810803927758148, guid: 46c65990a81402d4d8d5ea6b5b0f3fb7, type: 3}
 --- !u!4 &220298415
 Transform:
   m_ObjectHideFlags: 0

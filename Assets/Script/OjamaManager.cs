@@ -21,21 +21,25 @@ public class OjamaManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Level = Level + 1;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Level = Level + 1;
+        //}
 
-        //Level = PlayerManager.instance.NowLevel;
+        Level = PlayerManager.instance.NowLevel;
 
+        
         if (Level == NextLevel)
         {
-                LevelUp();
-                Debug.Log("今のレベル：" + Level);
-                Debug.Log("次のレベル：" + NextLevel);
+            LevelUp();
+            Debug.Log("今のレベル：" + Level);
+            Debug.Log("次のレベル：" + NextLevel);
         }
-        
-       
+
+
+
+
+
     }
 
     private void SpawnPrefab()
@@ -50,6 +54,18 @@ public class OjamaManager : MonoBehaviour
             // Prefabを生成してゲーム上に表示
             GameObject spawnedPrefab = Instantiate(prefab, prefab.transform.position, Quaternion.identity);
             activePrefabs.Add(spawnedPrefab);
+
+            for (int j = 0; j < activePrefabs.Count; j++)
+            {
+                if (activePrefabs[j].name == "OjamaKari")
+                {
+                    index = Random.Range(0, prefabList.Count);
+                    prefab = prefabList[index];
+                    spawnedPrefab = Instantiate(prefab, prefab.transform.position, Quaternion.identity);
+                    activePrefabs.Add(spawnedPrefab);
+                }
+            }
+           
         }
 
         
@@ -64,8 +80,12 @@ public class OjamaManager : MonoBehaviour
         }
         activePrefabs.Clear();
 
-        // 新たなPrefabを表示
-        SpawnPrefab();
+        if (Level >= 15)
+        {
+            // 新たなPrefabを表示
+            SpawnPrefab();
+        }
+       
 
         NextLevel += 1;
     }

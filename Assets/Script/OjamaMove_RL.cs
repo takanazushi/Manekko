@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OjamaMove_LR : MonoBehaviour
+public class OjamaMove_RL : MonoBehaviour
 {
     // ˆÚ“®‘¬“x
-    public float speed = -2f;
+    public float speed = 2f;
 
     // ’âŽ~ŽžŠÔ
     public float stopDuration = 5f;
 
     private Vector3 initialPosition;
     private Vector3 stopPosition;
-    private bool isMovingRight = true;
+    private bool isMovingLeft = true;
     private float timer = 0f;
 
     Vector2 TopLeft;
@@ -31,7 +31,7 @@ public class OjamaMove_LR : MonoBehaviour
 
         Debug.Log(randomY);
 
-
+      
         initialPosition = new Vector3(this.transform.position.x, randomY, this.transform.position.z);
 
         //ƒ‰ƒ“ƒ_ƒ€YŽ²‚ð•ÏX‚µ‚½‚Ì‚ÅAŒ»ÝˆÊ’u‚É”½‰f
@@ -41,10 +41,10 @@ public class OjamaMove_LR : MonoBehaviour
 
         //Œ»ÝˆÊ’uŽæ“¾
         initialPosition = this.transform.position;
-
+        
 
         // ’âŽ~ˆÊ’u‚ðŒvŽZ
-        stopPosition = new Vector3(-2.8f, initialPosition.y, 0f);
+        stopPosition = new Vector3(2.8f, initialPosition.y, 0f);
 
         Debug.Log(randomY);
     }
@@ -53,14 +53,14 @@ public class OjamaMove_LR : MonoBehaviour
     void Update()
     {
         // ¶•ûŒü‚ÉˆÚ“®
-        if (isMovingRight)
+        if (isMovingLeft)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
 
             // ’âŽ~ˆÊ’u‚É“ž’B‚µ‚½‚ç’âŽ~‚·‚é
-            if (transform.position.x >= stopPosition.x)
+            if (transform.position.x <= stopPosition.x)
             {
-                isMovingRight = false;
+                isMovingLeft = false;
                 timer = 0f;
             }
         }
@@ -76,10 +76,10 @@ public class OjamaMove_LR : MonoBehaviour
             // ‰ŠúˆÊ’u‚ÉŒü‚©‚Á‚ÄˆÚ“®
             transform.position = new Vector3(newx, initialPosition.y, transform.position.z);
 
-            if (transform.position.x <= initialPosition.x)
+            if (transform.position.x >= initialPosition.x)
             {
                 transform.position = initialPosition;
-                isMovingRight = true;
+                isMovingLeft = true;
                 timer = 0f;
             }
 
