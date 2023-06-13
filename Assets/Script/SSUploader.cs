@@ -1,19 +1,19 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
-public class SSUploader : MonoBehaviour
+public static class SSUploader
 {
-    //アップロードAPIのレスポンスデータ
+    // アップロードAPIのレスポンスデータ(必要分のみ定義)
+    [Serializable]
     private struct Response
     {
         [Serializable]
         public struct Data
         {
-            //アップロードされた画像URL
+            // アップロードされた画像URL
             public string link;
         }
 
@@ -22,34 +22,56 @@ public class SSUploader : MonoBehaviour
         public int status;
     }
 
-    //画像をImgurにアップロードする
-    public static UploadToImagur
-    (
-        //Imugurに登録したClientID
+    //アップロード処理
+    public static IEnumerator UploadToImgur(
+
+        //Imgurに登録したClient ID
         string clientID,
 
         //投稿する画像データ
-        Texture2D screenShot,
+        Texture2D image,
 
         //アップロードしたURLを受け取るコールバック
         UnityAction<string> onCompleted,
 
         //エラーメッセージを受け取るコールバック
         UnityAction<string> onError = null
-
     )
     {
-        //画像データをバイナリ変換する
-        var imageBytes = screenShot.EncodeToPNG();
-
-        //バイナリデータをBase64に変換する
+        // Texture2D→バイナリ変換
+        var imageBytes = image.EncodeToPNG();
+        // バイナリ→Base64変換
         var imageBase64 = Convert.ToBase64String(imageBytes);
 
-        //FromDataの作成
-        var fromData = new WWWForm();
-        fromData.AddField("screenShot", imageBase64);
+        // Form Dataの作成
+        var formData = new WWWForm();
+        formData.AddField("image", imageBase64);
 
-        //リクエストの作成
-        using var request = UnityWebRequest.Post("https://api.imgur.com/3/screenShot\", formData");
+        // リクエスト作成
+        using var request = UnityWebRequest.Post("https://api.imgur.com/3/image", formData);
+        request.SetRequestHeader("AUTHORIZATION", "Client-ID " + clientID);
+
+        // リクエスト実行
+        yield return request.SendWebRequest();
+
+        // レスポンスチェック
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            onError?.Invoke(request.error);
+            yield break;
+        }
+
+        // レスポンスデータ(JSON)をパース
+        var response = JsonUtility.FromJson<Response>(request.downloadHandler.text);
+
+        // 成否チェック
+        if (!response.success)
+        {
+            onError?.Invoke($"アップロードエラー (status : ${response.status})");
+            yield break;
+        }
+
+        // コールバックでリンクを返す
+        onCompleted?.Invoke(response.data.link);
     }
 }
