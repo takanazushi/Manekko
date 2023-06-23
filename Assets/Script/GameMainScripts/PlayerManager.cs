@@ -20,6 +20,12 @@ public class PlayerManager : MonoBehaviour
     public int NowScore = 0;
 
     [HideInInspector]
+    public int EndlessMode_NowLevel = 1;
+
+    [HideInInspector]
+    public int EndlessMode_NowScore = 0;
+
+    [HideInInspector]
     public string NowTitle="ç°ÇÃÉXÉRÉA";
 
     [HideInInspector]
@@ -66,6 +72,24 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector]
     public string ThirdTitle="Ç‹ÇæóVÇÒÇ≈Ç¢Ç‹ÇπÇÒ";
+
+    [HideInInspector]
+    public int EndlessFirstLevel = 0;
+
+    [HideInInspector]
+    public int EndlessFirstScore = 0;
+
+    [HideInInspector]
+    public int EndlessSecondLevel = 0;
+
+    [HideInInspector]
+    public int EndlessSecondScore = 0;
+
+    [HideInInspector]
+    public int EndlessThirdLevel = 0;
+
+    [HideInInspector]
+    public int EndlessThirdScore = 0;
 
     //å„Ç≈í«â¡Ç∑ÇÈÇ‚Ç¬
     //èÃçÜ

@@ -84,6 +84,15 @@ public class Read : MonoBehaviour
             PlayerManager.instance.ThirdWrongCount = saveData.ThirdWrongCount;
             PlayerManager.instance.ThirdScore = saveData.ThirdScore;
             PlayerManager.instance.ThirdTitle = saveData.ThirdTitle;
+
+            PlayerManager.instance.EndlessFirstLevel = saveData.EndlessFirstLevel;
+            PlayerManager.instance.EndlessFirstScore = saveData.EndlessFirstScore;
+
+            PlayerManager.instance.EndlessSecondLevel = saveData.EndlessSecondLevel;
+            PlayerManager.instance.EndlessSecondScore = saveData.EndlessSecondScore;
+
+            PlayerManager.instance.EndlessThirdLevel = saveData.EndlessThirdLevel;
+            PlayerManager.instance.EndlessThirdScore = saveData.EndlessThirdScore;
         }
 
     }

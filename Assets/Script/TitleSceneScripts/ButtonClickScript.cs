@@ -28,9 +28,19 @@ public class ButtonClickScript : MonoBehaviour
         SceneManager.LoadScene("ModeSelect");
     }
 
+    public void EndlessModeLoad()
+    {
+        SceneManager.LoadScene("EndlessMode");
+    }
+
     public void RankingLoad()
     {
         SceneManager.LoadScene("ScoreRanking");
+    }
+
+    public void EndlessMondeRankingLoad()
+    {
+        SceneManager.LoadScene("EndlessMode_ScoreRanking");
     }
 
    

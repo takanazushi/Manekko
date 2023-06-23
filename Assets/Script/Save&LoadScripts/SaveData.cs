@@ -22,4 +22,13 @@ public class SaveData
     public float ThirdGameTime;
     public int ThirdScore;
     public string ThirdTitle;
+
+    public int EndlessFirstLevel = 0;
+    public int EndlessFirstScore = 0;
+
+    public int EndlessSecondLevel = 0;
+    public int EndlessSecondScore = 0;
+
+    public int EndlessThirdLevel = 0;
+    public int EndlessThirdScore = 0;
 }

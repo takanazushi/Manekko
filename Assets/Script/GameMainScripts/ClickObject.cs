@@ -1,21 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClickObject : MonoBehaviour
 {
     private GameMain gamemainScript;
+    private EndressModeScript endressmodeScript;
     private CountDownScript countdownscript; 
 
 
     private void Awake()
     {
-        gamemainScript = FindObjectOfType<GameMain>();
+        if (SceneManager.GetActiveScene().name == "MainGame")
+        {
+            gamemainScript = FindObjectOfType<GameMain>();
+        }
+        else if(SceneManager.GetActiveScene().name == "EndlessMode")
+        {
+            endressmodeScript = FindObjectOfType<EndressModeScript>();
+        }
+            
         countdownscript = FindObjectOfType<CountDownScript>();
 
-        if (gamemainScript == null)
+        if (gamemainScript == null && SceneManager.GetActiveScene().name == "MainGame") 
         {
             Debug.LogError("GameMainが見つかりませんでした。");
+        }
+
+        if(endressmodeScript==null&& SceneManager.GetActiveScene().name == "EndlessMode")
+        {
+            Debug.LogError("EndlessModeが見つかりませんでした。");
         }
 
         if (countdownscript == null)
@@ -31,18 +46,37 @@ public class ClickObject : MonoBehaviour
             return;
         }
 
-        if (this.gameObject.CompareTag(gamemainScript.prefabA.tag))
+        if (SceneManager.GetActiveScene().name == "MainGame")
         {
-            
-            Debug.Log("正解！");
+            if (this.gameObject.CompareTag(gamemainScript.prefabA.tag))
+            {
 
-            gamemainScript.IsGameClear = true;
-            //newBehaviourScript.CorrectAnswer();
+                Debug.Log("正解！");
+
+                gamemainScript.IsGameClear = true;
+                //newBehaviourScript.CorrectAnswer();
+            }
+            else
+            {
+                GetComponent<Renderer>().material.color = Color.green;
+                gamemainScript.WrongAnswer();
+            }
         }
-        else
+        else if (SceneManager.GetActiveScene().name == "EndlessMode")
         {
-            GetComponent<Renderer>().material.color = Color.green;
-            gamemainScript.WrongAnswer();
+            if (this.gameObject.CompareTag(endressmodeScript.prefabA.tag))
+            {
+
+                Debug.Log("正解！");
+
+                endressmodeScript.IsGameClear = true;
+                //newBehaviourScript.CorrectAnswer();
+            }
+            else
+            {
+                GetComponent<Renderer>().material.color = Color.green;
+                endressmodeScript.WrongAnswer();
+            }
         }
     }
 }

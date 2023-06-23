@@ -34,6 +34,10 @@ public class Save : MonoBehaviour
 
         public string[] Title;
 
+        public int[] EndlessMode_Level;
+
+        public int[] EndlessMode_Score;
+
     }
 
     // Start is called before the first frame update
@@ -95,6 +99,8 @@ public class Save : MonoBehaviour
             stoc.GameTime = new float[4];
             stoc.Score = new int[4];
             stoc.Title = new string[4];
+            stoc.EndlessMode_Level = new int[4];
+            stoc.EndlessMode_Score = new int[4];
 
             stoc.Level[0] = PlayerManager.instance.NowLevel;
             stoc.WrongCount[0] = PlayerManager.instance.NowWorongCount;
@@ -120,6 +126,20 @@ public class Save : MonoBehaviour
             stoc.Score[3] = PlayerManager.instance.ThirdScore;
             stoc.Title[3] = PlayerManager.instance.ThirdTitle;
 
+            stoc.EndlessMode_Score[0] = PlayerManager.instance.EndlessMode_NowScore;
+            stoc.EndlessMode_Level[0] = PlayerManager.instance.EndlessMode_NowLevel;
+
+            stoc.EndlessMode_Score[1] = PlayerManager.instance.EndlessFirstScore;
+            stoc.EndlessMode_Level[1] = PlayerManager.instance.EndlessFirstLevel;
+
+            stoc.EndlessMode_Score[2]=PlayerManager.instance.EndlessSecondScore;
+            stoc.EndlessMode_Level[2]=PlayerManager.instance.EndlessSecondLevel;
+
+            stoc.EndlessMode_Score[3]=PlayerManager.instance.EndlessThirdScore;
+            stoc.EndlessMode_Level[3] = PlayerManager.instance.EndlessThirdLevel;
+
+
+            //目指せレベル100のスコア整理
             int tmpLevel;
             int tmpWrongCount;
             float tmpGametime;
@@ -155,6 +175,28 @@ public class Save : MonoBehaviour
                 }
             }
 
+            //エンドレスモードのスコア整理
+            tmpScore = 0;
+            tmpLevel = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = i + 1; j < 4; j++)
+                {
+                    if (stoc.EndlessMode_Level[i] < stoc.EndlessMode_Level[j])
+                    {
+                        tmpLevel = stoc.EndlessMode_Level[i];
+                        stoc.EndlessMode_Level[i] = stoc.EndlessMode_Level[j];
+                        stoc.EndlessMode_Level[j] = tmpLevel;
+
+
+                        tmpScore = stoc.EndlessMode_Score[i];
+                        stoc.EndlessMode_Score[i] = stoc.EndlessMode_Score[j];
+                        stoc.EndlessMode_Score[j] = tmpScore;
+                    }
+                }
+            }
+
             saveData.FirstLevel = stoc.Level[0];
             saveData.FirstGameTime = stoc.GameTime[0];
             saveData.FirstWrongCount = stoc.WrongCount[0];
@@ -172,6 +214,15 @@ public class Save : MonoBehaviour
             saveData.ThirdWrongCount = stoc.WrongCount[2];
             saveData.ThirdScore = stoc.Score[2];
             saveData.ThirdTitle = stoc.Title[2];
+
+            saveData.EndlessFirstLevel = stoc.EndlessMode_Level[0];
+            saveData.EndlessFirstScore = stoc.EndlessMode_Score[0];
+
+            saveData.EndlessSecondLevel = stoc.EndlessMode_Level[1];
+            saveData.EndlessSecondScore = stoc.EndlessMode_Score[1];
+
+            saveData.EndlessThirdLevel = stoc.EndlessMode_Level[2];
+            saveData.EndlessThirdScore = stoc.EndlessMode_Score[2];
 
             //saveData.FirstLevel = PlayerManager.instance.FirstLevel;
             //saveData.FirstGameTime = PlayerManager.instance.FirstGameTime;

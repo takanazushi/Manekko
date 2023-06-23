@@ -20,7 +20,7 @@ public class OjamaMoveWave : MonoBehaviour
     float yPos = 0.0f;
     private float TimeCounter;
 
-    private float randomYrange = 0.8f;
+    //private float randomYrange = 0.8f;
 
     int LRFlag;
 

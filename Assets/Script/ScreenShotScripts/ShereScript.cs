@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class ShereScript : MonoBehaviour
 {
+    [HeaderAttribute("変数名の上にマウスカーソルで説明表示")]
     //キャプチャ対象カメラ
     //Nullの場合は全画面
-    [SerializeField]
+    [SerializeField, HeaderAttribute("キャプチャ対象カメラ"), TooltipAttribute("Nullの場合は全画面スクショ")]
     private Camera target;
 
     //ImgurアプリケーションのClientID
     //最終buildするときは隠す
-    [SerializeField]
+    [SerializeField,HeaderAttribute("ImgurのClientID")]
     private string imgurClientID = "ここにClient IDを入力";
 
     //ツイート文言
-    [SerializeField]
+    [SerializeField, HeaderAttribute("ツイートする際の文章")]
     private string tweetText;
 
     //ハッシュタグ
-    [SerializeField]
+    [SerializeField, HeaderAttribute("ハッシュタグ"), TooltipAttribute("#は自動で入るので必要ない")]
     private string[] hashTags;
 
-    public  void DateUpLoad()
+    public void DateUpLoad()
     {
         
-       StartCoroutine(UploadAndTweet());
+       StartCoroutine(uploadAndTweet());
 
     }
 
-    private IEnumerator UploadAndTweet()
+    private IEnumerator uploadAndTweet()
     {
         // 画面キャプチャ
         Texture2D image = null;

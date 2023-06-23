@@ -14,6 +14,8 @@ public class RankingScript : MonoBehaviour
     //[SerializeField]
     //public Text NowTitle;
 
+    //Score“ü‚ê‚é
+
     [SerializeField]
     public Text FirstLevel;
     [SerializeField]

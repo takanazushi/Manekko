@@ -5,11 +5,23 @@ using UnityEngine;
 
 public static class TwitterShare
 {
-  
-    //Share処理
-    //textはツイート文章
-    //urlはImgurのURL
-    //tagはハッシュタグ
+
+
+    /// <summary>
+    /// ツイッターにShereする際処理
+    /// </summary>
+
+    ///<param name="text">
+    ///ツイート文章
+    ///</param>
+
+    ///<param name="url">
+    ///ImgurのURL
+    ///</param>
+
+    ///<param name="tags">
+    ///ハッシュタグ
+    ///</param>
     public static void Share(string text, string url,IEnumerable<string> tags = null)
     {
         // ツイート用URL作成
@@ -20,8 +32,12 @@ public static class TwitterShare
             // ハッシュタグがあればパラメータに追加
             var strTag = string.Join(",", tags);
 
+            //URLに
             if (!string.IsNullOrEmpty(strTag))
-                tweetURL += "&hashtags=" + strTag+ "\n";
+            {
+                tweetURL += "&hashtags=" + strTag + "\n";
+            }
+                
         }
 
         // ツイート画面を新しいウィンドウで開く
