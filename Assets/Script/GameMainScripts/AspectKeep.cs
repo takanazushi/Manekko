@@ -5,35 +5,47 @@ using UnityEngine;
 [ExecuteAlways]
 public class AspectKeep : MonoBehaviour
 {
-    [SerializeField]
-    private Camera targetCamera; //対象とするカメラ
+    [SerializeField,HeaderAttribute("対象とするカメラ")]
+    private Camera targetCamera; 
 
-    [SerializeField]
-    private Vector2 aspectVec; //目的解像度
+    [SerializeField,HeaderAttribute("目的解像度")]
+    private Vector2 aspectVec; 
 
     
 
     void Update()
     {
-        var screenAspect = Screen.width / (float)Screen.height; //画面のアスペクト比
-        var targetAspect = aspectVec.x / aspectVec.y; //目的のアスペクト比
+        //画面のアスペクト比
+        var screenAspect = Screen.width / (float)Screen.height;
 
-        var magRate = targetAspect / screenAspect; //目的アスペクト比にするための倍率
+        //目的のアスペクト比
+        var targetAspect = aspectVec.x / aspectVec.y;
 
-        var viewportRect = new Rect(0, 0, 1, 1); //Viewport初期値でRectを作成
+        //目的のアスペクト比にするための倍率
+        var magRate = targetAspect / screenAspect;
+
+        //Viewport初期値でRectを作成
+        var viewportRect = new Rect(0, 0, 1, 1);
 
         if (magRate < 1)
         {
-            viewportRect.width = magRate; //使用する横幅を変更
-            viewportRect.x = 0.5f - viewportRect.width * 0.5f;//中央寄せ
+            //使用する横幅を変更
+            viewportRect.width = magRate;
+
+            //中央寄せ
+            viewportRect.x = 0.5f - viewportRect.width * 0.5f;
         }
         else
         {
-            viewportRect.height = 1 / magRate; //使用する縦幅を変更
-            viewportRect.y = 0.5f - viewportRect.height * 0.5f;//中央余生
+            //使用する縦幅を変更
+            viewportRect.height = 1 / magRate;
+
+            //中央寄せ
+            viewportRect.y = 0.5f - viewportRect.height * 0.5f;
         }
 
-        targetCamera.rect = viewportRect; //カメラのViewportに適用
+        //カメラのViewportに適用
+        targetCamera.rect = viewportRect; 
 
        
     }

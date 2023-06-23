@@ -10,15 +10,36 @@ using UnityEngine.UI;
 
 public class GameMain : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> prefabs = new List<GameObject>();
-    [SerializeField] private List<GameObject> prefabsA = new List<GameObject>();
-    [SerializeField] private List<Image> Wrongprefab = new List<Image>();
-    [SerializeField] public GameObject prefabA;
-    [SerializeField] private List<GameObject> prefabBs = new List<GameObject>();
-    [SerializeField] private List<GameObject> objectsB = new List<GameObject>();
-    [SerializeField] private Text levelText;
-    [SerializeField] private Text timeText;
-    [SerializeField] private float gameTime = 60f;
+    [SerializeField, HeaderAttribute("プレイヤーがクリックするオブジェクトを格納する配列")] 
+    private List<GameObject> clickObjectPrefabs = new List<GameObject>();
+
+    [SerializeField, HeaderAttribute("見本になるオブジェクトを格納する配列")] 
+    private List<GameObject> targetObjectPrefabs = new List<GameObject>();
+
+    [SerializeField, HeaderAttribute("お手付き回数を表示するUIを格納する配列")] 
+    private List<Image> wrongPrehubs = new List<Image>();
+
+    /// <summary>
+    /// 見本のオブジェクトを格納する変数。
+    /// </summary>
+    [HideInInspector]
+    public GameObject TargetObject;
+
+    [SerializeField] 
+    private List<GameObject> prefabBs = new List<GameObject>();
+
+    [SerializeField] 
+    private List<GameObject> objectsB = new List<GameObject>();
+
+    [SerializeField] 
+    private Text levelText;
+
+    [SerializeField] 
+    private Text timeText;
+
+    [SerializeField] 
+    private float gameTime = 60f;
+
     [SerializeField] private int level = 1;
 
     private float timeLeft;
@@ -80,24 +101,24 @@ public class GameMain : MonoBehaviour
 
     public void SetPrefabA()
     {
-        // 前に生成された prefabA オブジェクトがあれば削除する
-        if (prefabA != null)
+        // 前に生成された TargetObject オブジェクトがあれば削除する
+        if (TargetObject != null)
         {
-            Destroy(prefabA);
+            Destroy(TargetObject);
         }
 
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
-        int index = UnityEngine.Random.Range(0, prefabsA.Count);
-        prefabA = prefabsA[index];
+        int index = UnityEngine.Random.Range(0, targetObjectPrefabs.Count);
+        TargetObject = targetObjectPrefabs[index];
         Vector3 aPos = new Vector3(2, 4, 0);
-        prefabA = Instantiate(prefabA, aPos, Quaternion.identity);
+        TargetObject = Instantiate(TargetObject, aPos, Quaternion.identity);
     }
 
     public void ClearPrefabA()
     {
-        if (prefabA != null)
+        if (TargetObject != null)
         {
-            Destroy(prefabA);
+            Destroy(TargetObject);
         }
     }
 
@@ -126,12 +147,12 @@ public class GameMain : MonoBehaviour
             int bIndex;
             do
             {
-                bIndex = UnityEngine.Random.Range(0, prefabs.Count);
+                bIndex = UnityEngine.Random.Range(0, clickObjectPrefabs.Count);
             } while (usedIndices.Contains(bIndex));
             usedIndices.Add(bIndex);
             // usedIndicesリストをクリアする
             usedIndices.Clear();
-            prefabBs.Add(prefabs[bIndex]);
+            prefabBs.Add(clickObjectPrefabs[bIndex]);
         }
 
         
@@ -146,7 +167,7 @@ public class GameMain : MonoBehaviour
         // リスト内のすべてのPrefabについて、タグがSetPrefabA()で選ばれたPrefabのタグと同じものがあるかどうかチェックする
         for (int i = 0; i < prefabBs.Count; i++)
         {
-            if (prefabBs[i].tag == prefabA.tag)
+            if (prefabBs[i].tag == TargetObject.tag)
             {
                 // 同じタグのPrefabが見つかった場合、その数をカウントする
                 sameTagCount++;
@@ -159,10 +180,10 @@ public class GameMain : MonoBehaviour
                 else
                 {
                     // 同じタグのPrefabを選んでも良いようにするため、新しいPrefabを選ぶ際にはすでに選んだPrefabも含める
-                    GameObject newPrefab = prefabs[UnityEngine.Random.Range(0, prefabs.Count)];
-                    while (newPrefab.tag == prefabA.tag && sameTagCount < prefabs.Count)
+                    GameObject newPrefab = clickObjectPrefabs[UnityEngine.Random.Range(0, clickObjectPrefabs.Count)];
+                    while (newPrefab.tag == TargetObject.tag && sameTagCount < clickObjectPrefabs.Count)
                     {
-                        newPrefab = prefabs[UnityEngine.Random.Range(0, prefabs.Count)];
+                        newPrefab = clickObjectPrefabs[UnityEngine.Random.Range(0, clickObjectPrefabs.Count)];
                     }
 
                     // 同じタグのPrefabをランダムに置き換える
@@ -176,9 +197,9 @@ public class GameMain : MonoBehaviour
         {
             // SetPrefabA()と同じタグのPrefabを探す
             GameObject prefabToInstantiate = null;
-            foreach (GameObject prefab in prefabs)
+            foreach (GameObject prefab in clickObjectPrefabs)
             {
-                if (prefab.CompareTag(prefabA.tag))
+                if (prefab.CompareTag(TargetObject.tag))
                 {
                     prefabToInstantiate = prefab;
                     break;
@@ -232,23 +253,23 @@ public class GameMain : MonoBehaviour
         switch (PlayerManager.instance.NowWorongCount)
         {
             case 1:
-                Wrongprefab[4].color = Color.gray;
+                wrongPrehubs[4].color = Color.gray;
                 break;
 
             case 2:
-                Wrongprefab[3].color = Color.gray;
+                wrongPrehubs[3].color = Color.gray;
                 break;
 
             case 3:
-                Wrongprefab[2].color = Color.gray;
+                wrongPrehubs[2].color = Color.gray;
                 break;
 
             case 4:
-                Wrongprefab[1].color = Color.gray;
+                wrongPrehubs[1].color = Color.gray;
                 break;
 
             case 5:
-                Wrongprefab[0].color = Color.gray;
+                wrongPrehubs[0].color = Color.gray;
                 break;
         }
     }
