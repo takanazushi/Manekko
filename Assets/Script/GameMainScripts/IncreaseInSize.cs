@@ -21,14 +21,15 @@ public class IncreaseInSize : MonoBehaviour
     void Start()
     {
         level = PlayerManager.instance.NowLevel;
-      
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //初期スケールに、レベルに応じたサイズの増加量をかけた計算をする
         scale = baseScale + (level / 13f) * scaleFactor;
+
+        //ゲームオブジェクトのスケールを設定する
         this.gameObject.transform.localScale = new Vector3(scale, scale, 0);
     }
 }

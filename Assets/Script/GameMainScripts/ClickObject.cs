@@ -99,7 +99,7 @@ public class ClickObject : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "EndlessMode")
         {
             //もしクリックしたオブジェクトが、見本と同じタグなら
-            if (this.gameObject.CompareTag(endressmodeScript.prefabA.tag))
+            if (this.gameObject.CompareTag(endressmodeScript.TargetObject.tag))
             {
                 //ログに正解を出す
                 Debug.Log("正解！");
