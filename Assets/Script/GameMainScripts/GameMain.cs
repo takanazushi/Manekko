@@ -16,8 +16,11 @@ public class GameMain : MonoBehaviour
     [SerializeField, HeaderAttribute("見本になるオブジェクトを格納する配列")] 
     protected List<GameObject> targetObjectPrefabs = new List<GameObject>();
 
-    [SerializeField, HeaderAttribute("お手付き回数を表示するUIを格納する配列")] 
-    protected List<Image> wrongPrehubs = new List<Image>();
+    [SerializeField, HeaderAttribute("お手付きできる回数を表示するUIを格納する配列")] 
+    protected List<SpriteRenderer> wrongPrehubs = new List<SpriteRenderer>();
+
+    [SerializeField, HeaderAttribute("お手付きしてしまった回数を表示するUIを格納する配列")]
+    protected List<SpriteRenderer> wrongEndPrehubs = new List<SpriteRenderer>();
 
     /// <summary>
     /// 見本のオブジェクトを格納する変数。
@@ -80,6 +83,13 @@ public class GameMain : MonoBehaviour
         SetPrefabClickObject();
         SetTime();
         SetLevel();
+
+        for(int i = 0; i < 5; i++)
+        {
+            wrongEndPrehubs[i].enabled = false;
+        }
+
+        PlayerManager.instance.NowLevel = 1;
     }
 
     private void Update()
@@ -141,7 +151,7 @@ public class GameMain : MonoBehaviour
         TargetObject = targetObjectPrefabs[index];
 
         //生成位置を指定
-        Vector3 aPos = new Vector3(2, 4, 0);
+        Vector3 aPos = new Vector3(1.92f, 3.61f, 0);
 
         //生成して、指定位置に配置する
         TargetObject = Instantiate(TargetObject, aPos, Quaternion.identity);
@@ -293,7 +303,7 @@ public class GameMain : MonoBehaviour
     private void SetTime()
     {
         PlayerManager.instance.NowGameTime = gameTime;
-        timeText.text = "Time: " + PlayerManager.instance.NowGameTime.ToString("F0");
+        timeText.text = PlayerManager.instance.NowGameTime.ToString("F0");
     }
 
     /// <summary>
@@ -301,7 +311,7 @@ public class GameMain : MonoBehaviour
     /// </summary>
     private void SetLevel()
     {
-        levelText.text = "Level: " + PlayerManager.instance.NowLevel.ToString();
+        levelText.text = PlayerManager.instance.NowLevel.ToString();
     }
 
     /// <summary>
@@ -310,7 +320,7 @@ public class GameMain : MonoBehaviour
     private void ReduceTime()
     {
         PlayerManager.instance.NowGameTime -= Time.deltaTime;
-        timeText.text = "Time: " + PlayerManager.instance.NowGameTime.ToString("F0");
+        timeText.text = PlayerManager.instance.NowGameTime.ToString("F0");
     }
 
     /// <summary>
@@ -321,23 +331,33 @@ public class GameMain : MonoBehaviour
         switch (PlayerManager.instance.NowWorongCount)
         {
             case 1:
-                wrongPrehubs[4].color = Color.gray;
+                wrongEndPrehubs[4].enabled = true;
+                wrongEndPrehubs[4].color = Color.gray;
+                wrongPrehubs[4].enabled = false;
                 break;
 
             case 2:
-                wrongPrehubs[3].color = Color.gray;
+                wrongEndPrehubs[3].enabled = true;
+                wrongEndPrehubs[3].color = Color.gray;
+                wrongPrehubs[3].enabled = false;
                 break;
 
             case 3:
-                wrongPrehubs[2].color = Color.gray;
+                wrongEndPrehubs[2].enabled = true;
+                wrongEndPrehubs[2].color = Color.gray;
+                wrongPrehubs[2].enabled = false;
                 break;
 
             case 4:
-                wrongPrehubs[1].color = Color.gray;
+                wrongEndPrehubs[1].enabled = true;
+                wrongEndPrehubs[1].color = Color.gray;
+                wrongPrehubs[1].enabled = false;
                 break;
 
             case 5:
-                wrongPrehubs[0].color = Color.gray;
+                wrongEndPrehubs[0].enabled = true;
+                wrongEndPrehubs[0].color = Color.gray;
+                wrongPrehubs[0].enabled = false;
                 break;
         }
     }

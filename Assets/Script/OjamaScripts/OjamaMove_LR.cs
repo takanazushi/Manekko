@@ -44,7 +44,7 @@ public class OjamaMove_LR : MonoBehaviour
 
 
         // ’âŽ~ˆÊ’u‚ðŒvŽZ
-        stopPosition = new Vector3(-2.8f, initialPosition.y, 0f);
+        stopPosition = new Vector3(-1.78f, initialPosition.y, 0f);
 
         Debug.Log(randomY);
     }

@@ -25,7 +25,7 @@ public class EndressModeScript : GameMain
         SetTime();
         SetLevel();
 
-        
+        PlayerManager.instance.EndlessMode_NowLevel = 1;
     }
 
     private void Update()
@@ -70,18 +70,18 @@ public class EndressModeScript : GameMain
 
     private void SetTime()
     {
-        timeText.text = "Time: " + gameTime.ToString("F0");
+        timeText.text = gameTime.ToString("F0");
     }
 
     private void SetLevel()
     {
-        levelText.text = "Level: " + PlayerManager.instance.EndlessMode_NowLevel.ToString();
+        levelText.text = PlayerManager.instance.EndlessMode_NowLevel.ToString();
     }
 
     private void ReduceTime()
     {
         gameTime -= Time.deltaTime;
-        timeText.text = "Time: " + gameTime.ToString("F0");
+        timeText.text = gameTime.ToString("F0");
     }
 
     private void SetWrongPrefab()
@@ -90,7 +90,9 @@ public class EndressModeScript : GameMain
         switch (wrongcount)
         {
             case 1:
-                wrongPrehubs[0].color = Color.gray;
+                wrongEndPrehubs[0].enabled = true;
+                wrongEndPrehubs[0].color = Color.gray;
+                wrongPrehubs[0].enabled = false;
                 break;
         }
     }

@@ -55,4 +55,9 @@ public class PauseScript : MonoBehaviour
     {
         SceneManager.LoadScene("MainGame");
     }
+
+    public void GameReset_Endless()
+    {
+        SceneManager.LoadScene("EndlessMode");
+    }
 }

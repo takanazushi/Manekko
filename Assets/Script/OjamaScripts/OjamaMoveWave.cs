@@ -62,11 +62,11 @@ public class OjamaMoveWave : MonoBehaviour
         {
             //画面外に出たら左から出てくる
             Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-            if (screenPos.x >= Screen.width)
+            if (screenPos.x >= Screen.width + 200) 
             {
                 if (screenPos.x - width >= Screen.width)
                 {
-                    initialPos = new Vector3(-4, initialPos.y, initialPos.z);
+                    initialPos = new Vector3(-5, initialPos.y, initialPos.z);
                     TimeCounter = 0.0f;
                 }
             }
@@ -77,11 +77,11 @@ public class OjamaMoveWave : MonoBehaviour
             Vector2 leftscreenpos = Camera.main.WorldToScreenPoint(TopLeft);
 
             //右から出てくる
-            if (screenPos.x <= leftscreenpos.x)
+            if (screenPos.x <= leftscreenpos.x - 200) 
             {
                 if (screenPos.x - width <= leftscreenpos.x) 
                 {
-                    initialPos = new Vector3(4, initialPos.y, initialPos.z);
+                    initialPos = new Vector3(5, initialPos.y, initialPos.z);
                     TimeCounter = 0.0f;
                 }
             }
